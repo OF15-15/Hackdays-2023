@@ -1,4 +1,5 @@
 #include <Arduino.h>
+#include "Grove_I2C_Motor_Driver.h"
 
 int led[] = {8, 9, 10, 11, 12};
 int schiebePoti = A1;
@@ -10,20 +11,20 @@ void waterOn();
 void setup() {
     Serial.begin(9600);
     Serial.println(__FILE__);
-    for (int i = 0; i < 5; i++) {
-        pinMode(led[i], OUTPUT);
-    }
+    Motor.begin(0x0f);
+    Serial.println("Motor initialized");
+
 }
 
 void loop() {
-    int schiebePotiVal = analogRead(schiebePoti);
-    int drehPotiVal = analogRead(drehPoti);
-    Serial.print("Pitch: ");
-    Serial.println(schiebePotiVal);
-    Serial.print("Turn: ");
-    Serial.println(drehPotiVal);
-    delay(100);
+    for(int i =0; i<= 100; i++){
+    Motor.StepperRun(-1);
+    delay(200);
+    }
+    Serial.println("loop");
+
 }
+
 
 void waterOn() {
     for(int i = 0; i<5 ; i++){
